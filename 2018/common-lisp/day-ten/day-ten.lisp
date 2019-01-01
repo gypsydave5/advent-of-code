@@ -43,7 +43,8 @@
    with inputs = *input*
    with area = (area (boundaries inputs))
    do
-     (cond ((< area (area (boundaries inputs))) (return (values i area)))
+     (cond ((< area (area (boundaries inputs)))
+            (return (values i area)))
            (t
             (setf area (area (boundaries inputs)))
             (setf inputs (next-positions inputs)))))
