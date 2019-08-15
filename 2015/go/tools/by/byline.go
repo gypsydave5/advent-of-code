@@ -1,7 +1,9 @@
 package by
 
-import "os"
-import "bufio"
+import (
+	"bufio"
+	"os"
+)
 
 func Line(fname string, f func(line string)) error {
 	file, err := os.Open("day-two-input.txt")
