@@ -2,25 +2,16 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 
 	"github.com/gypsydave5/advent-of-code/2015/go/tools/by"
 )
 
-type mode func(bool) bool
-
 var (
-	on mode = func(b bool) bool {
-		return true
-	}
-	off mode = func(b bool) bool {
-		return false
-	}
-	toggle mode = func(b bool) bool {
-		return !b
-	}
+	on     = 1
+	off    = -1
+	toggle = 2
 )
 
 func main() {
@@ -30,7 +21,7 @@ func main() {
 }
 
 func holdBackTheNight(lines []string) int {
-	var lightShow = new([1000][1000]bool)
+	var lightShow = new([1000][1000]int)
 	for _, s := range lines {
 		l := parseLine(s)
 		turnOnTheLight(lightShow, l)
@@ -38,23 +29,24 @@ func holdBackTheNight(lines []string) int {
 	return countLights(lightShow)
 }
 
-func countLights(ls *[1000][1000]bool) int {
+func countLights(ls *[1000][1000]int) int {
 	var count int
 	for x, ys := range ls {
 		for y := range ys {
-			if ls[x][y] {
-				count++
-			}
+			count += ls[x][y]
 		}
 	}
 
 	return count
 }
 
-func turnOnTheLight(ls *[1000][1000]bool, l line) {
+func turnOnTheLight(ls *[1000][1000]int, l line) {
 	for x := l.p1.x; x <= l.p2.x; x++ {
 		for y := l.p1.y; y <= l.p2.y; y++ {
-			ls[x][y] = l.mode(ls[x][y])
+			next := ls[x][y] + l.mode
+			if next > -1 {
+				ls[x][y] += l.mode
+			}
 		}
 	}
 }
@@ -79,9 +71,6 @@ func parseLine(s string) line {
 func parsePoint(s string) point {
 	var p point
 	ss := strings.Split(s, ",")
-	if len(ss) != 2 {
-		log.Fatal(ss)
-	}
 	p.x, _ = strconv.Atoi(ss[0])
 	p.y, _ = strconv.Atoi(ss[1])
 	return p
@@ -93,7 +82,7 @@ type point struct {
 }
 
 type line struct {
-	mode mode
+	mode int
 	p1   point
 	p2   point
 }
