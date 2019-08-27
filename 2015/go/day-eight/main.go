@@ -8,12 +8,26 @@ import (
 )
 
 func main() {
-	var result int
 	lines := by.AllLines("input.txt")
+	fmt.Println(one(lines))
+	fmt.Println(two(lines))
+}
+
+func one(lines []string) int {
+	var result int
 	for _, line := range lines {
 		result += len(line)
 		s, _ := strconv.Unquote(line)
 		result -= len(s)
 	}
-	fmt.Println(result)
+	return result
+}
+func two(lines []string) int {
+	var result int
+	for _, line := range lines {
+		result -= len(line)
+		s := strconv.Quote(line)
+		result += len(s)
+	}
+	return result
 }
