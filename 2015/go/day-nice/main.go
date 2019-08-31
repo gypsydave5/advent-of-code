@@ -28,7 +28,7 @@ func main() {
 	for _, node := range toVisit {
 		origins = append(origins, edge{0, node})
 	}
-	m := traverse(origins, toVisit, 0)
+	m := findMax(origins, toVisit, 0)
 	fmt.Println(m)
 }
 
@@ -54,6 +54,22 @@ func traverse(options []edge, remaining []string, distance int) int {
 		}
 	}
 	return min
+}
+
+func findMax(options []edge, remaining []string, distance int) int {
+	max := 0
+	if len(remaining) == 0 {
+		return distance
+	}
+	for _, option := range options {
+		if contains(remaining, option.node) {
+			d := findMax(nodes[option.node].connections, remove(remaining, option.node), distance+option.distance)
+			if d > max {
+				max = d
+			}
+		}
+	}
+	return max
 }
 
 func remove(ss []string, r string) []string {
