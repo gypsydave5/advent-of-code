@@ -28,6 +28,8 @@ func main() {
 		peeps = append(peeps, p)
 	}
 
+	peeps = append(peeps, "MEEE")
+
 	var result int
 	for _, p := range permute(peeps) {
 		s := score(rules, p)
