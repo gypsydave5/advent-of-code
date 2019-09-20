@@ -12,11 +12,11 @@ func TestParse(t *testing.T) {
 	}{
 		{
 			"Vixen can fly 8 km/s for 8 seconds, but then must rest for 53 seconds.",
-			reindeer{"Vixen", 8, 8, 8, 53, 0, 0},
+			reindeer{"Vixen", 8, 8, 8, 53, 0, 0, 0},
 		},
 		{
 			"Blitzen can fly 13 km/s for 4 seconds, but then must rest for 49 seconds.",
-			reindeer{"Blitzen", 13, 4, 4, 49, 0, 0},
+			reindeer{"Blitzen", 13, 4, 4, 49, 0, 0, 0},
 		},
 	}
 	for _, c := range cases {
@@ -34,9 +34,9 @@ func TestReindeerTick(t *testing.T) {
 		reindeer reindeer
 		expected reindeer
 	}{
-		{reindeer{"bob", 5, 4, 3, 2, 1, 0}, reindeer{"bob", 5, 4, 2, 2, 1, 5}},
-		{reindeer{"bob", 5, 4, 0, 2, 2, 0}, reindeer{"bob", 5, 4, 0, 2, 1, 0}},
-		{reindeer{"bob", 22, 4, 0, 2, 0, 0}, reindeer{"bob", 22, 4, 3, 2, 2, 22}},
+		{reindeer{"bob", 5, 4, 3, 2, 1, 0, 0}, reindeer{"bob", 5, 4, 2, 2, 1, 5, 0}},
+		{reindeer{"bob", 5, 4, 0, 2, 2, 0, 0}, reindeer{"bob", 5, 4, 0, 2, 1, 0, 0}},
+		{reindeer{"bob", 22, 4, 0, 2, 0, 0, 0}, reindeer{"bob", 22, 4, 3, 2, 2, 22, 0}},
 	}
 
 	for _, c := range cases {

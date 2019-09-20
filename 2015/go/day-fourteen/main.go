@@ -14,15 +14,24 @@ func main() {
 	}
 
 	for i := 0; i < 2503; i++ {
+		var leadDist int
 		for i := range reindeers {
 			reindeers[i].tick()
+			if reindeers[i].distance > leadDist {
+				leadDist = reindeers[i].distance
+			}
+		}
+		for i := range reindeers {
+			if reindeers[i].distance == leadDist {
+				reindeers[i].score++
+			}
 		}
 	}
 
 	var max int
 	for _, r := range reindeers {
-		if r.distance > max {
-			max = r.distance
+		if r.score > max {
+			max = r.score
 		}
 	}
 
@@ -37,6 +46,7 @@ type reindeer struct {
 	sleepTime int
 	sleepLeft int
 	distance  int
+	score     int
 }
 
 func (r *reindeer) tick() {
@@ -57,5 +67,5 @@ func parse(s string) reindeer {
 	var speed, run, sleep int
 	fs := "%s can fly %d km/s for %d seconds, but then must rest for %d seconds."
 	fmt.Sscanf(s, fs, &name, &speed, &run, &sleep)
-	return reindeer{name, speed, run, run, sleep, 0, 0}
+	return reindeer{name, speed, run, run, sleep, 0, 0, 0}
 }
